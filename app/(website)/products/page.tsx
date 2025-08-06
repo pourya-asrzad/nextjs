@@ -1,11 +1,11 @@
 "use client";
-import { Header } from "../layouts/Header";
-import { products } from "../constants";
+
 import Link from "next/link";
 import { AppRoutes } from "@/configs/Route";
 import { useQuery } from "react-query";
-import { getAllProducts } from "../queryhooks/products";
+
 import { Spinner } from "@heroui/react";
+import { getAllProducts } from "@/app/queryhooks/products";
 
 export default function Products() {
   const { data, isLoading, isError } = useQuery({
