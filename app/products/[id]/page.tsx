@@ -1,18 +1,25 @@
-import { products } from "@/app/constants";
+"use client";
 import { Header } from "@/app/layouts/Header";
+import { getOneProduct } from "@/app/queryhooks/products";
+import { Spinner } from "@heroui/react";
+import { useParams } from "next/navigation";
+import { useQuery } from "react-query";
 
-export default async function Products({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  console.log(id);
+export default function Products() {
+  const { id } = useParams();
+
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => getOneProduct(id as string),
+    queryKey: ["products"],
+  });
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div>
-      <Header />
-      products detail :
-      {products.filter((product) => product.id === Number(id))[0].name}
+      products detail : <h1 className="font-bold text-2xl">{data?.title}</h1>
+      <p>{data?.description}</p>
     </div>
   );
 }
