@@ -10,6 +10,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema, TLoginSchema } from "./_schema/login.types";
+import { useRouter } from "next/navigation";
+import { AppRoutes } from "@/configs/Route";
 
 export default function App() {
   const {
@@ -21,11 +23,11 @@ export default function App() {
   } = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
   });
-
-  console.log(watch());
+  const router = useRouter();
 
   const loginOnSubmit = (data: TLoginSchema) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    router.replace(AppRoutes.DASHBOARD + AppRoutes.PRODUCTS);
   };
   return (
     <Form
