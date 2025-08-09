@@ -1,5 +1,10 @@
 import Image from "next/image";
+import { Counter } from "./_components/Counter";
 
 export default function Home() {
-  return <div>product</div>;
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
 }
