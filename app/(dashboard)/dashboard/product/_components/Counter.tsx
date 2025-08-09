@@ -1,11 +1,10 @@
 "use client";
 import { Button } from "@heroui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./../../../../lib/store";
 import { counterAction } from "@/app/lib/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hooks";
 export const Counter = () => {
-  const counter = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  const counter = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
   return (
     <div className="flex gap-2">
       <Button type="button" onPress={() => dispatch(counterAction.increment())}>
