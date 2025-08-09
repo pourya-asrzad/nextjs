@@ -3,4 +3,5 @@ export const AppRoutes = {
   ABOUT_US: "/about-us",
   PRODUCTS: "/product",
   DASHBOARD: "/dashboard",
+  CART: "/dashboard/cart",
 };

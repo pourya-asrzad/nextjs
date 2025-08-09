@@ -3,3 +3,12 @@ export type TProduct = {
   description: string;
   id: string;
 };
+
+export type TProductWithAmount = {
+  id: number;
+  name: string;
+  amount: number;
+  description: string;
+  image: string;
+  category: string;
+};
