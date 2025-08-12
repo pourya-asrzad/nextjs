@@ -17,11 +17,14 @@ export const postProducts = async (
   return res.data;
 };
 
-export const patchProducts = async (
-  body: IPostProductsParameter,
-  id: string
-): Promise<TProduct[]> => {
-  const res = await baseApi.patch("/todos/" + id, body);
+export const patchProducts = async ({
+  body,
+  id,
+}: {
+  body: IPostProductsParameter;
+  id: string;
+}): Promise<TProduct[]> => {
+  const res = await baseApi.put("/todos/" + id, body);
   return res.data;
 };
 

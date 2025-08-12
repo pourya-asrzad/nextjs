@@ -1,11 +1,15 @@
+import { editProductAction } from "@/app/lib/features/editProductSlice";
+import { useAppDispatch } from "@/app/lib/hooks";
 import { getAllProducts } from "@/app/queryhooks/products";
 import { AppRoutes } from "@/configs/Route";
-import { Spinner } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 export function GetProducts() {
+  const dispatch = useAppDispatch();
+
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: getAllProducts,
     queryKey: ["products"],
@@ -27,6 +31,13 @@ export function GetProducts() {
                   <Link href={AppRoutes.PRODUCTS + `/${product.id}`}>
                     {product.id} : {product.title}
                   </Link>
+                  <Button
+                    onPress={() =>
+                      dispatch(editProductAction.setEditId(product))
+                    }
+                  >
+                    Edit
+                  </Button>
                 </li>
               );
             })

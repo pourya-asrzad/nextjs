@@ -17,6 +17,7 @@ import { AppRoutes } from "@/configs/Route";
 import { useMutation, useQueryClient } from "react-query";
 import {
   IPostProductsParameter,
+  patchProducts,
   postProducts,
 } from "@/app/queryhooks/products";
 import { toast } from "sonner";
@@ -24,9 +25,15 @@ import {
   loginSchema,
   TLoginSchema,
 } from "../(dashboard)/dashboard/login/_schema/login.types";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { useEffect } from "react";
+import { editProductAction } from "../lib/features/editProductSlice";
 
 export function AddTodoModal() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const queryclient = useQueryClient();
+  const { product } = useAppSelector((state) => state.editProduct);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -37,7 +44,14 @@ export function AddTodoModal() {
   } = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
   });
-  const queryclient = useQueryClient();
+
+  useEffect(() => {
+    if (product) {
+      setValue("title", product.title);
+      setValue("description", product.description);
+      onOpen();
+    }
+  }, [product]);
 
   const todoListMutation = useMutation({
     mutationFn: (data: IPostProductsParameter) => postProducts(data),
@@ -48,16 +62,36 @@ export function AddTodoModal() {
     onError() {
       toast.error("post has an error");
     },
+    onSettled() {
+      onClose();
+      reset();
+    },
+  });
+  const todoListPatchMutation = useMutation({
+    mutationFn: (data: IPostProductsParameter) =>
+      patchProducts({ body: data, id: product?.id as string }),
+    onSuccess() {
+      queryclient.invalidateQueries({ queryKey: "products" });
+      toast.success("Todo Edited");
+    },
+    onError() {
+      toast.error("patch has an error");
+    },
+    onSettled() {
+      dispatch(editProductAction.setEditId(null));
+      onClose();
+      reset();
+    },
   });
 
   const loginOnSubmit = (data: TLoginSchema) => {
-    todoListMutation.mutate(data);
-    onClose();
-    reset();
-
-    // alert(JSON.stringify(data));
-    // router.replace(AppRoutes.DASHBOARD + AppRoutes.PRODUCTS);
+    if (product) {
+      todoListPatchMutation.mutate(data);
+    } else {
+      todoListMutation.mutate(data);
+    }
   };
+
   return (
     <>
       <Button onPress={onOpen}>Add Todo </Button>
@@ -117,13 +151,19 @@ export function AddTodoModal() {
                   Reset
                 </Button>
                 <Button
-                  isDisabled={todoListMutation.isLoading}
-                  isLoading={todoListMutation.isLoading}
+                  isDisabled={
+                    todoListMutation.isLoading ||
+                    todoListPatchMutation.isLoading
+                  }
+                  isLoading={
+                    todoListMutation.isLoading ||
+                    todoListPatchMutation.isLoading
+                  }
                   className="w-full"
                   color="primary"
                   type="submit"
                 >
-                  Add
+                  {product ? "edit" : "Add"}
                 </Button>
               </Form>
             </>
