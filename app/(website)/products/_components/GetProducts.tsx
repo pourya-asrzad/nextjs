@@ -1,4 +1,4 @@
-import { editProductAction } from "@/app/lib/features/editProductSlice";
+import { productAction } from "@/app/lib/features/editProductSlice";
 import { useAppDispatch } from "@/app/lib/hooks";
 import { getAllProducts } from "@/app/queryhooks/products";
 import { AppRoutes } from "@/configs/Route";
@@ -33,12 +33,13 @@ export function GetProducts() {
                   </Link>
                   <Button
                     onPress={() =>
-                      dispatch(editProductAction.setEditId(product))
+                      dispatch(productAction.setProductId(product))
                     }
                   >
                     Edit
                   </Button>
                 </li>
+                
               );
             })
           ) : (

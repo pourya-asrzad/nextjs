@@ -27,12 +27,12 @@ import {
 } from "../(dashboard)/dashboard/login/_schema/login.types";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { useEffect } from "react";
-import { editProductAction } from "../lib/features/editProductSlice";
+import { productAction } from "../lib/features/editProductSlice";
 
 export function AddTodoModal() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const queryclient = useQueryClient();
-  const { product } = useAppSelector((state) => state.editProduct);
+  const { product } = useAppSelector((state) => state.product);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -50,8 +50,12 @@ export function AddTodoModal() {
       setValue("title", product.title);
       setValue("description", product.description);
       onOpen();
+      
     }
-  }, [product]);
+    console.log("a");
+  }
+  , [product]);
+  console.log("a");
 
   const todoListMutation = useMutation({
     mutationFn: (data: IPostProductsParameter) => postProducts(data),
@@ -78,7 +82,7 @@ export function AddTodoModal() {
       toast.error("patch has an error");
     },
     onSettled() {
-      dispatch(editProductAction.setEditId(null));
+      dispatch(productAction.setProductId(null));
       onClose();
       reset();
     },

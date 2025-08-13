@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { counterReducer } from "./features/counterSlice";
 import { cartReducer } from "./features/cartSlice";
-import { editProductReducer } from "./features/editProductSlice";
+import { productReducer } from "./features/editProductSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterReducer,
       cart: cartReducer,
-      editProduct: editProductReducer,
+      product: productReducer,
     },
     devTools: true,
   });

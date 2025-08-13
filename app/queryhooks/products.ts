@@ -32,3 +32,7 @@ export const getOneProduct = async (id: string): Promise<TProduct> => {
   const res = await baseApi.get("/todos/" + id);
   return res.data;
 };
+export const deleteOneProduct = async (id: string): Promise<TProduct> => {
+  const res = await baseApi.delete("/todos/" + id);
+  return res.data;
+};
