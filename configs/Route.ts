@@ -1,7 +1,7 @@
 export const AppRoutes = {
   HOME: "/",
   ABOUT_US: "/about-us",
-  PRODUCTS: "/product",
+  PRODUCTS: "/products",
   DASHBOARD: "/dashboard",
   CART: "/dashboard/cart",
 };
