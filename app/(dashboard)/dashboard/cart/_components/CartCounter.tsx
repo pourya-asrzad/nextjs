@@ -31,8 +31,24 @@ export const CartCounter: FC<Props> = (props) => {
       <div>
         <span>{product.quantity}</span>
       </div>
-      <Button type="button">-</Button>
-      <Button>remove from cart</Button>
+      <Button  type="button"
+        onPress={() => {
+          dispatch(
+            cartAction.decrementCart({
+              id: product.id,
+              quantity:1,
+              price: product.price,
+            })
+          );
+        }}>-</Button>
+      <Button type="button"
+        onPress={() => {
+          dispatch(
+            cartAction.deleteCart({
+              id: product.id,
+            })
+          );
+        }}>remove from cart</Button>
     </div>
   );
 };

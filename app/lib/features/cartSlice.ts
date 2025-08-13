@@ -40,12 +40,10 @@ export const cartSlice = createSlice({
     if (!existingItem) return; 
 
     const decrementQuantity = Math.min(action.payload.quantity, existingItem.quantity);
-    existingItem.quantity -= decrementQuantity;
+    existingItem.quantity =existingItem.quantity - decrementQuantity;
     state.totalPrice -= action.payload.price * decrementQuantity;
 
-    if (existingItem.quantity === 0) {
-    state.items = state.items.filter(item => item.id !== action.payload.id);
-    }
+   
     },
     deleteCart: (
     state,
