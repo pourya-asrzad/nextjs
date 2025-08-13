@@ -38,6 +38,16 @@ export function GetProducts() {
                   >
                     Edit
                   </Button>
+                    <Button
+                    onPress={() =>{
+                        dispatch(productAction.setProductIdDelete(product.id))
+                        console.log(product.id);
+                    }
+                     
+                    }
+                  >
+                    Delete
+                  </Button>
                 </li>
                 
               );

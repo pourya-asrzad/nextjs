@@ -52,10 +52,10 @@ export function AddTodoModal() {
       onOpen();
       
     }
-    console.log("a");
+   
   }
   , [product]);
-  console.log("a");
+  
 
   const todoListMutation = useMutation({
     mutationFn: (data: IPostProductsParameter) => postProducts(data),
